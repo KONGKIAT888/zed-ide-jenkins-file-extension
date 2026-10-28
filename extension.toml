@@ -1,10 +1,10 @@
 id = "jenkinsfile"
 name = "Jenkinsfile"
 description = "Jenkinsfile (Groovy Pipeline) support: syntax highlighting, bracket matching, auto-indent, comment toggling, `sh` step bash injection, stage outline, Jenkinsfile.* variants (via file_types globs), and optional Groovy language server integration."
-version = "0.2.0"
+version = "0.1.0"
 schema_version = 1
 authors = ["u0038"]
-repository = "https://github.com/u0038/zed-ide-jenkins-file-extension"
+repository = "https://github.com/KONGKIAT888/zed-ide-jenkins-file-extension"
 
 [language_servers.groovy-language-server]
 name = "Groovy Language Server"
