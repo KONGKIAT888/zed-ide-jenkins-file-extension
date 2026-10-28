@@ -20,6 +20,34 @@ A [Zed](https://zed.dev) extension that adds first-class support for
 - **Formatter integration** (via [npm-groovy-lint], see below).
 - **Optional language server** for completions/hints (opt-in, see below).
 
+## `Jenkinsfile.*` variants (`Jenkinsfile.sit`, `Jenkinsfile.uat`, …)
+
+Per-environment pipelines are usually named `Jenkinsfile.<env>`. Zed's
+extension `path_suffixes` only matches exact suffixes — glob patterns are not
+supported there — so this extension handles them in two ways:
+
+1. **Automatic (content-based, best-effort).** Zed checks the start of the
+   file against `first_line_pattern`. A `Jenkinsfile.sit` is picked up as a
+   Jenkinsfile when one of these appears at the start of a line within the
+   first ~256 characters: `pipeline {`, `node {` / `node(`, `stage(`,
+   `properties {`, `library …`, `@Library(…)`, `def call(…)` or a groovy
+   shebang. Files that begin with long banner comments may slip through.
+
+2. **Explicit (recommended, always works).** Map the glob yourself in Zed
+   settings — either globally or per project in `.zed/settings.json`:
+
+   ```json
+   {
+     "file_types": {
+       "Jenkinsfile": ["Jenkinsfile.*", "jenkinsfile.*"]
+     }
+   }
+   ```
+
+   `file_types` supports globs (unlike `path_suffixes`), so any
+   `Jenkinsfile.<anything>` is opened with the full Jenkinsfile tooling
+   regardless of its content.
+
 ## Installing (development)
 
 From this repository:
@@ -118,8 +146,9 @@ Nothing to do — the server only starts when you enable it as shown above.
   get the Jenkins-oriented highlighting. If that bothers you, remove `"groovy"`
   from `path_suffixes` in `languages/jenkinsfile/config.toml` in your local
   copy.
-- Files without a matching suffix are detected when their first line looks like
-  `pipeline {` / `node {` or a groovy shebang.
+- Files without a matching suffix (including `Jenkinsfile.*` variants) are
+  detected when a pipeline keyword appears near the top of the file — see
+  [the `Jenkinsfile.*` section](#jenkinsfile-variants-jenkinsfilesit-jenkinsfileuat-)
 - The grammar treats pipeline steps as plain function calls; completion comes
   only from the language server when enabled.
 

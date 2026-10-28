@@ -1,7 +1,7 @@
 name = "Jenkinsfile"
 grammar = "groovy"
 path_suffixes = ["Jenkinsfile", "jenkinsfile", ".jenkinsfile", "groovy"]
-first_line_pattern = '(^\s*pipeline\s*\{)|(^\s*node\s*\{)|(^#!.*groovy)'
+first_line_pattern = '(^\s*pipeline\s*\{)|(^\s*node\s*[\{\(])|(^\s*stage\s*\()|(^\s*properties\s*\{)|(^\s*library\s)|(\s*@Library\s*\()|(^\s*def\s+call\s*\()|(^#!.*groovy)'
 line_comments = ["// "]
 tab_size = 4
 
